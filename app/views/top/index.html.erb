@@ -1,0 +1,14 @@
+<%= form_tag({controller: "top", action: "index"}, {method: "post"}) do %>
+  <%= text_field_tag 'word', params[:word], :maxlength => 30 %>
+  <%= submit_tag "検索する" %>
+<% end %>
+
+<% if params[:word].present? %>
+  <% if @results.present? %>
+    <% @results.each do |item| %>
+      <p><%= item['ken'] %><%= item['kuchoson'] %><%= item['detail'] %></p>
+    <% end %>
+  <% else %>
+    <p>一致した住所はありませんでした。</p>
+  <% end %>
+<% end %>
