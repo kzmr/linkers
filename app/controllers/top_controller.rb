@@ -2,23 +2,32 @@ class TopController < ApplicationController
   require 'csv'
   def index
     if params[:word].present?
-      @results = []
+      @results = {}
+
       char_index = Hash[JSON.load(File.read("#{Rails.root}/file/char.index"))]
+
       zips = []
       params[:word].each_char do |char|
-        if char_index.has_key?(char)
-          if zips.size == 0 
-            zips.concat(char_index[char]['zip'])
-          else
-            zips = extract_duplicate_values(zips, char_index[char]['zip'])
-          end
+        next if char.match(/[\s　]/)
+
+        unless char_index.has_key?(char)
+          zips = []
+          break
+        end
+
+        if zips.size == 0 
+          zips.concat(char_index[char]['zip'])
+        else
+          zips = extract_duplicate_values(zips, char_index[char]['zip'])
+          break if zips.size == 0
         end
       end
 
       if zips.size > 0
         zip_index = Hash[JSON.load(File.read("#{Rails.root}/file/zip.index"))]
+        zips.sort!
         zips.each do |zip|
-          @results << zip_index[zip]
+          @results[zip] = zip_index[zip]
         end
       end
     end

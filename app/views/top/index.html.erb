@@ -5,8 +5,8 @@
 
 <% if params[:word].present? %>
   <% if @results.present? %>
-    <% @results.each do |item| %>
-      <p><%= item['ken'] %><%= item['kuchoson'] %><%= item['detail'] %></p>
+    <% @results.each do |key, item| %>
+      <p>"<%= key %>","<%= item['ken'] %>","<%= item['kuchoson'] %>","<%= item['detail'] %>"</p>
     <% end %>
   <% else %>
     <p>一致した住所はありませんでした。</p>

@@ -17,7 +17,6 @@ class Tasks::CreateCharIndex
 
       # unique & count
       index.each do |key, item|
-        puts item
         item['zip'].uniq!
         item['count'] = item['zip'].size
       end
