@@ -22,6 +22,7 @@ class TopController < ApplicationController
           break if zips.size == 0
         end
       end
+      char_index = nil
 
       if zips.size > 0
         zip_index = Hash[JSON.load(File.read("#{Rails.root}/file/zip.index"))]
